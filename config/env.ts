@@ -9,3 +9,5 @@ dotenv.config();
 
 export const baseURL = process.env.BASE_URL;
 export const apiKey = process.env.API_KEY;
+export const notesBaseURL =
+    process.env.NOTES_BASE_URL || "https://practice.expandtesting.com";

@@ -9,7 +9,10 @@
     "test:coverage": "jest --coverage",
     "test:ci": "jest --ci",
     "test:contracts": "PACT_ENABLED=true jest --runInBand \"contracts/**/*.test.ts\"",
-    "test:real": "USE_REAL_API=true jest --runInBand --testPathPatterns=tests/.*\\.test\\.ts$"
+    "test:real": "USE_REAL_API=true jest --runInBand --testPathPatterns=tests/.*\\.test\\.ts$",
+    "test:notes:real": "USE_REAL_API=true jest --runInBand tests/notesFlow.test.ts",
+    "test:place:real": "USE_REAL_API=true jest --runInBand tests/placeFlow.test.ts",
+    "test:library:real": "USE_REAL_API=true jest --runInBand tests/libraryFlow.test.ts"
   },
   "keywords": [],
   "author": "",

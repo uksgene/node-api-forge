@@ -1,0 +1,14 @@
+{
+  "type": "object",
+  "required": ["id", "title", "description", "completed", "created_at", "updated_at", "category", "user_id"],
+  "properties": {
+    "id": { "type": "string" },
+    "title": { "type": "string" },
+    "description": { "type": "string" },
+    "completed": { "type": "boolean" },
+    "created_at": { "type": "string" },
+    "updated_at": { "type": "string" },
+    "category": { "type": "string" },
+    "user_id": { "type": "string" }
+  }
+}

@@ -22,9 +22,13 @@ class ApiClient {
     ): Promise<ApiResponse<T>> {
 
         logger.info(`POST ${endpoint}`, body);
+        if (!useMock) {
+            const fullUrl = new URL(endpoint, baseURL || "").toString();
+            console.log(`FULL_URL: ${fullUrl}`);
+        }
 
         const res = useMock
-            ? await handleMockRequest("POST", endpoint, body)
+            ? await handleMockRequest("POST", endpoint, body, {})
             : await request(baseURL || "")
                 .post(endpoint)
                 .send(body)
@@ -39,9 +43,13 @@ class ApiClient {
     static async get<T = unknown>(endpoint: string): Promise<ApiResponse<T>> {
 
         logger.info(`GET ${endpoint}`);
+        if (!useMock) {
+            const fullUrl = new URL(endpoint, baseURL || "").toString();
+            console.log(`FULL_URL: ${fullUrl}`);
+        }
 
         const res = useMock
-            ? await handleMockRequest("GET", endpoint)
+            ? await handleMockRequest("GET", endpoint, {}, {})
             : await request(baseURL || "").get(endpoint);
 
         logger.info("Response", res.body);
@@ -56,9 +64,13 @@ class ApiClient {
     ): Promise<ApiResponse<T>> {
 
         logger.info(`PUT ${endpoint}`, body);
+        if (!useMock) {
+            const fullUrl = new URL(endpoint, baseURL || "").toString();
+            console.log(`FULL_URL: ${fullUrl}`);
+        }
 
         const res = useMock
-            ? await handleMockRequest("PUT", endpoint, body)
+            ? await handleMockRequest("PUT", endpoint, body, {})
             : await request(baseURL || "")
                 .put(endpoint)
                 .send(body);
