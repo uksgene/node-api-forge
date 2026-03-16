@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "required": ["location", "accuracy", "name", "phone_number", "address", "types", "website", "language"],
+  "properties": {
+    "location": {
+      "type": "object",
+      "required": ["lat", "lng"],
+      "properties": {
+        "lat": { "type": "number" },
+        "lng": { "type": "number" }
+      }
+    },
+    "accuracy": { "type": "number" },
+    "name": { "type": "string" },
+    "phone_number": { "type": "string" },
+    "address": { "type": "string" },
+    "types": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "website": { "type": "string" },
+    "language": { "type": "string" }
+  }
+}

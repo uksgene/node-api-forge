@@ -1,0 +1,9 @@
+{
+  "type": "object",
+  "required": ["book_name", "isbn", "aisle"],
+  "properties": {
+    "book_name": { "type": "string" },
+    "isbn": { "type": "string" },
+    "aisle": { "type": "string" }
+  }
+}

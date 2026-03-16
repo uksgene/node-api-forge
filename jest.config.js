@@ -1,0 +1,30 @@
+// jest.config.js
+module.exports = {
+    testEnvironment: "node",               // Node.js environment
+    verbose: true,                         // Print test names and results
+    maxWorkers: "50%",                     // Jest will use 50% of available CPU cores to run tests.
+    testMatch: [
+        "**/tests/**/*.test.js",
+        "**/contracts/**/*.test.js"
+    ], // Where Jest should look for test files
+    testTimeout: 30000,                    // 30 seconds per test for API response time
+    collectCoverage: true,                 // Enable coverage report
+    coverageDirectory: "coverage",         // Output coverage folder
+    coverageReporters: ["json", "lcov", "text", "clover"],
+
+    // Optional: Add reporters for HTML report
+    reporters: [
+        "default",
+        [
+            "jest-html-reporters",
+            {
+                publicPath: "./reports",
+                filename: "report.html",
+                expand: true
+            }
+        ]
+    ],
+
+    // Optional: Setup files if you need environment variables
+    setupFiles: ["dotenv/config"]
+};

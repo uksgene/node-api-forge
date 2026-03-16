@@ -1,0 +1,12 @@
+{
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": ["Name", "Isbn", "Aisle"],
+    "properties": {
+      "Name": { "type": "string" },
+      "Isbn": { "type": "string" },
+      "Aisle": { "type": "integer" }
+    }
+  }
+}
