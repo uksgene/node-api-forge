@@ -1,13 +1,13 @@
-const PlaceService = require("../services/placeService");
-const buildPlace = require("../testData/placeDataBuilder");
-const Validator = require("../core/responseValidator");
-const schema = require("../schemas/getPlace.schema.json");
-const retry = require("../core/retryHandler");
+import PlaceService from "../services/placeService";
+import buildPlace from "../testData/placeDataBuilder";
+import Validator from "../core/responseValidator";
+import schema from "../schemas/getPlace.schema.json";
+import retry from "../core/retryHandler";
 
 describe("Place API Flow", () => {
 
-    let placeId;
-    let place;
+    let placeId: string;
+    let place: Record<string, unknown>;
 
     beforeAll(async () => {
         place = await buildPlace();
@@ -15,8 +15,9 @@ describe("Place API Flow", () => {
 
     test("Add Place", async () => {
         const res = await PlaceService.addPlace(place);
+        const body = res.body as { place_id: string };
         expect(res.status).toBe(200);
-        placeId = res.body.place_id;
+        placeId = body.place_id;
     });
 
     test("Get Place", async () => {
@@ -33,7 +34,8 @@ describe("Place API Flow", () => {
 
     test("Delete Place", async () => {
         const res = await PlaceService.deletePlace(placeId);
-        expect(res.body.status).toBe("OK");
+        const body = res.body as { status: string };
+        expect(body.status).toBe("OK");
     });
 
 });

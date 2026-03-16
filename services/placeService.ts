@@ -1,20 +1,20 @@
 
 // Tests should only call services, never raw endpoints.
 
-const ApiClient = require("../core/apiClient");
-const { apiKey } = require("../config/env");
+import ApiClient from "../core/apiClient";
+import { apiKey } from "../config/env";
 
 class PlaceService {
 
-    static addPlace(body) {
+    static addPlace(body: Record<string, unknown>) {
         return ApiClient.post(`/maps/api/place/add/json?key=${apiKey}`, body);
     }
 
-    static getPlace(placeId) {
+    static getPlace(placeId: string) {
         return ApiClient.get(`/maps/api/place/get/json?place_id=${placeId}&key=${apiKey}`);
     }
 
-    static updatePlace(placeId, address) {
+    static updatePlace(placeId: string, address: string) {
 
         return ApiClient.put(
             `/maps/api/place/update/json`,
@@ -27,7 +27,7 @@ class PlaceService {
 
     }
 
-    static deletePlace(placeId) {
+    static deletePlace(placeId: string) {
 
         return ApiClient.post(
             `/maps/api/place/delete/json?key=${apiKey}`,
@@ -38,4 +38,4 @@ class PlaceService {
 
 }
 
-module.exports = PlaceService;
+export default PlaceService;

@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "esModuleInterop": true,
+    "strict": true,
+    "resolveJsonModule": true,
+    "types": ["node", "jest"],
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": [
+    "config/**/*.ts",
+    "core/**/*.ts",
+    "services/**/*.ts",
+    "testData/**/*.ts",
+    "tests/**/*.ts",
+    "contracts/**/*.ts",
+    "utils/**/*.ts"
+  ]
+}

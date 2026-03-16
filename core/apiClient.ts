@@ -1,9 +1,11 @@
 // This is the central HTTP engine.
 
-const request = require("supertest");
-const { baseURL } = require("../config/env");
-const logger = require("./logger");
-const handleMockRequest = require("./mockServer");
+import request from "supertest";
+import { baseURL } from "../config/env";
+import logger from "./logger";
+import handleMockRequest from "./mockServer";
+
+type ApiResponse<T = unknown> = { status: number; body: T };
 
 // In tests we avoid external network calls by routing to a lightweight
 // in-memory mock handler that speaks the same endpoints.
@@ -11,13 +13,16 @@ const useMock = process.env.NODE_ENV === "test";
 
 class ApiClient {
 
-    static async post(endpoint, body) {
+    static async post<T = unknown>(
+        endpoint: string,
+        body: Record<string, unknown>
+    ): Promise<ApiResponse<T>> {
 
         logger.info(`POST ${endpoint}`, body);
 
         const res = useMock
             ? await handleMockRequest("POST", endpoint, body)
-            : await request(baseURL)
+            : await request(baseURL || "")
                 .post(endpoint)
                 .send(body)
                 .set("Content-Type", "application/json");
@@ -25,39 +30,42 @@ class ApiClient {
         logger.info("Response", res.body);
         console.log(JSON.stringify({ endpoint, response: res.body }));
 
-        return res;
+        return res as ApiResponse<T>;
     }
 
-    static async get(endpoint) {
+    static async get<T = unknown>(endpoint: string): Promise<ApiResponse<T>> {
 
         logger.info(`GET ${endpoint}`);
 
         const res = useMock
             ? await handleMockRequest("GET", endpoint)
-            : await request(baseURL).get(endpoint);
+            : await request(baseURL || "").get(endpoint);
 
         logger.info("Response", res.body);
         console.log(JSON.stringify({ endpoint, response: res.body }));
 
-        return res;
+        return res as ApiResponse<T>;
     }
 
-    static async put(endpoint, body) {
+    static async put<T = unknown>(
+        endpoint: string,
+        body: Record<string, unknown>
+    ): Promise<ApiResponse<T>> {
 
         logger.info(`PUT ${endpoint}`, body);
 
         const res = useMock
             ? await handleMockRequest("PUT", endpoint, body)
-            : await request(baseURL)
+            : await request(baseURL || "")
                 .put(endpoint)
                 .send(body);
 
         logger.info("Response", res.body);
         console.log(JSON.stringify({ endpoint, response: res.body }));
 
-        return res;
+        return res as ApiResponse<T>;
     }
 
 }
 
-module.exports = ApiClient;
+export default ApiClient;

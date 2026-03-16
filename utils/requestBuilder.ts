@@ -1,19 +1,16 @@
-
 // Request Builder (Optional DSL)
-// utils/requestBuilder.js
+// utils/requestBuilder.ts
 
 class RequestBuilder {
 
-    constructor() {
-        this.body = {};
-    }
+    private body: Record<string, unknown> = {};
 
-    setLocation(lat, lng) {
+    setLocation(lat: number, lng: number) {
         this.body.location = { lat, lng };
         return this;
     }
 
-    setName(name) {
+    setName(name: string) {
         this.body.name = name;
         return this;
     }
@@ -24,4 +21,4 @@ class RequestBuilder {
 
 }
 
-module.exports = RequestBuilder;
+export default RequestBuilder;

@@ -1,16 +1,20 @@
-const { randomUUID } = require("crypto");
-const { URL } = require("url");
+import { randomUUID } from "crypto";
+import { URL } from "url";
 
 // Minimal in-memory mock of the Places and Library APIs used by tests.
 // This keeps tests offline and deterministic without external network calls.
-const places = new Map();
-const books = new Map();
+const places = new Map<string, Record<string, unknown>>();
+const books = new Map<string, { name: string; isbn: string; aisle: string; author: string }>();
 
-function response(statusCode, payload) {
+function response<T>(statusCode: number, payload: T) {
     return { status: statusCode, body: payload };
 }
 
-async function handleMockRequest(method, endpoint, body = {}) {
+async function handleMockRequest(
+    method: string,
+    endpoint: string,
+    body: Record<string, unknown> = {}
+) {
     const url = new URL(endpoint, "http://localhost");
     const path = url.pathname;
 
@@ -30,23 +34,24 @@ async function handleMockRequest(method, endpoint, body = {}) {
     }
 
     if (method === "PUT" && path === "/maps/api/place/update/json") {
-        const placeId = body.place_id;
+        const placeId = typeof body.place_id === "string" ? body.place_id : "";
         if (placeId && places.has(placeId)) {
-            const existing = places.get(placeId);
+            const existing = places.get(placeId) || {};
             places.set(placeId, { ...existing, address: body.address });
         }
         return response(200, { msg: "Address successfully updated" });
     }
 
     if (method === "POST" && path === "/maps/api/place/delete/json") {
-        if (body.place_id) {
-            places.delete(body.place_id);
+        const placeId = typeof body.place_id === "string" ? body.place_id : "";
+        if (placeId) {
+            places.delete(placeId);
         }
         return response(200, { status: "OK" });
     }
 
     if (method === "POST" && path === "/Library/Addbook.php") {
-        const payload = body || {};
+        const payload = body as { name: string; isbn: string; aisle: string; author: string };
         const id = `${payload.isbn}${payload.aisle}`;
         books.set(id, payload);
         return response(200, { Msg: "successfully added", ID: id });
@@ -73,6 +78,9 @@ async function handleMockRequest(method, endpoint, body = {}) {
             return response(404, { msg: "book not found" });
         }
         const book = books.get(id);
+        if (!book) {
+            return response(404, { msg: "book not found" });
+        }
         return response(200, {
             book_name: book.name,
             isbn: book.isbn,
@@ -81,8 +89,9 @@ async function handleMockRequest(method, endpoint, body = {}) {
     }
 
     if (method === "POST" && path === "/Library/DeleteBook.php") {
-        if (body.ID) {
-            books.delete(body.ID);
+        const id = typeof body.ID === "string" ? body.ID : "";
+        if (id) {
+            books.delete(id);
         }
         return response(200, { msg: "book is successfully deleted" });
     }
@@ -90,4 +99,4 @@ async function handleMockRequest(method, endpoint, body = {}) {
     return response(404, { status: "NOT_FOUND" });
 }
 
-module.exports = handleMockRequest;
+export default handleMockRequest;

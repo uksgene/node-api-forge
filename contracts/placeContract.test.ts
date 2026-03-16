@@ -1,6 +1,6 @@
-const path = require("path");
-const axios = require("axios");
-const { PactV3 } = require("@pact-foundation/pact");
+import path from "path";
+import axios from "axios";
+import { PactV3 } from "@pact-foundation/pact";
 
 const pactEnabled = process.env.PACT_ENABLED === "true";
 

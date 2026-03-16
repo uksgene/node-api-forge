@@ -1,6 +1,6 @@
 // Builder for Library API payloads without external dependencies.
 function buildBook() {
-    const randomString = (prefix) => {
+    const randomString = (prefix: string) => {
         const suffix = Math.random().toString(36).slice(2, 6);
         return `${prefix}${suffix}`;
     };
@@ -16,4 +16,4 @@ function buildBook() {
     };
 }
 
-module.exports = buildBook;
+export default buildBook;

@@ -1,13 +1,13 @@
-const LibraryService = require("../services/libraryService");
-const buildBook = require("../testData/libraryDataBuilder");
-const Validator = require("../core/responseValidator");
-const authorSchema = require("../schemas/libraryGetByAuthor.schema.json");
-const idSchema = require("../schemas/libraryGetById.schema.json");
+import LibraryService from "../services/libraryService";
+import buildBook from "../testData/libraryDataBuilder";
+import Validator from "../core/responseValidator";
+import authorSchema from "../schemas/libraryGetByAuthor.schema.json";
+import idSchema from "../schemas/libraryGetById.schema.json";
 
 describe("Library API Flow", () => {
 
-    let book;
-    let bookId;
+    let book: { name: string; isbn: string; aisle: string; author: string };
+    let bookId: string;
 
     beforeAll(() => {
         book = buildBook();
@@ -15,11 +15,12 @@ describe("Library API Flow", () => {
 
     test("Add Book", async () => {
         const res = await LibraryService.addBook(book);
+        const body = res.body as { Msg: string; ID: string };
 
         expect(res.status).toBe(200);
-        expect(res.body.Msg).toBe("successfully added");
+        expect(body.Msg).toBe("successfully added");
 
-        bookId = res.body.ID;
+        bookId = body.ID;
     });
 
     test("Get Books By Author", async () => {
@@ -27,7 +28,7 @@ describe("Library API Flow", () => {
 
         Validator.validate(authorSchema, res.body);
 
-        const found = res.body.some(
+        const found = (res.body as Array<{ Isbn: string; Aisle: number }>).some(
             (item) =>
                 item.Isbn === book.isbn &&
                 String(item.Aisle) === String(book.aisle)
@@ -37,16 +38,18 @@ describe("Library API Flow", () => {
 
     test("Get Book By ID", async () => {
         const res = await LibraryService.getBookById(bookId);
+        const body = res.body as { book_name: string };
 
         Validator.validate(idSchema, res.body);
 
-        expect(res.body.book_name).toBe(book.name);
+        expect(body.book_name).toBe(book.name);
     });
 
     test("Delete Book", async () => {
         const res = await LibraryService.deleteBook(bookId);
+        const body = res.body as { msg: string };
 
-        expect(res.body.msg).toBe("book is successfully deleted");
+        expect(body.msg).toBe("book is successfully deleted");
     });
 
 });
