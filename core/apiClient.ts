@@ -1,4 +1,7 @@
-// This is the central HTTP engine.
+// Central HTTP engine used by Services.
+// Inputs: endpoint path and request body (if any)
+// Outputs: { status, body } used by tests/services for assertions and validation
+// Notes: routes to mock handler in NODE_ENV=test unless USE_REAL_API=true.
 
 import request from "supertest";
 import { baseURL } from "../config/env";
@@ -9,7 +12,7 @@ type ApiResponse<T = unknown> = { status: number; body: T };
 
 // In tests we avoid external network calls by routing to a lightweight
 // in-memory mock handler that speaks the same endpoints.
-const useMock = process.env.NODE_ENV === "test";
+const useMock = process.env.NODE_ENV === "test" && process.env.USE_REAL_API !== "true";
 
 class ApiClient {
 
@@ -28,7 +31,7 @@ class ApiClient {
                 .set("Content-Type", "application/json");
 
         logger.info("Response", res.body);
-        console.log(JSON.stringify({ endpoint, response: res.body }));
+        console.log(JSON.stringify({ endpoint, response: res.body }, null, 2));
 
         return res as ApiResponse<T>;
     }
@@ -42,7 +45,7 @@ class ApiClient {
             : await request(baseURL || "").get(endpoint);
 
         logger.info("Response", res.body);
-        console.log(JSON.stringify({ endpoint, response: res.body }));
+        console.log(JSON.stringify({ endpoint, response: res.body }, null, 2));
 
         return res as ApiResponse<T>;
     }
@@ -61,7 +64,7 @@ class ApiClient {
                 .send(body);
 
         logger.info("Response", res.body);
-        console.log(JSON.stringify({ endpoint, response: res.body }));
+        console.log(JSON.stringify({ endpoint, response: res.body }, null, 2));
 
         return res as ApiResponse<T>;
     }

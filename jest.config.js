@@ -1,4 +1,5 @@
 // jest.config.js
+// Jest runner configuration for TypeScript tests and contract suites.
 module.exports = {
     preset: "ts-jest",
     testEnvironment: "node",               // Node.js environment

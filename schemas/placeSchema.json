@@ -1,9 +1,0 @@
-{
-  "type": "object",
-  "properties": {
-    "location": { "type": "object" },
-    "accuracy": { "type": "number" },
-    "name": { "type": "string" },
-    "address": { "type": "string" }
-  }
-}

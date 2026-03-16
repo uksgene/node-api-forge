@@ -44,14 +44,10 @@ Service layer that models API endpoints as methods.
 JSON schemas for response validation.
 - `getPlace.schema.json`
   - Full response contract for "get place" response.
-- `placeSchema.json`
-  - Minimal schema for base place data.
 
 ### testData/
 Test data sources and builders.
-- `placeData.json`
-  - Static sample payload for add-place operations.
-- `placeDataBuilder.js`
+- `placeDataBuilder.ts`
   - Generates realistic test data without external dependencies.
   - Avoids ESM-only faker during Jest runs.
 
@@ -69,9 +65,7 @@ Contract testing (provider/consumer) configuration.
 
 ### utils/
 Optional helpers.
-- `requestBuilder.js`
-  - Simple fluent builder (DSL-like) for building request bodies.
-  - Useful when assembling complex payloads in a readable way.
+- (No active utilities at the moment.)
 
 ### reports/
 Output artifacts.

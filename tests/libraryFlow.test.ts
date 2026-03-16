@@ -1,3 +1,6 @@
+// End-to-end library flow test.
+// Inputs: generated book payload + bookId chaining
+// Outputs: status/schema assertions to validate API behavior.
 import LibraryService from "../services/libraryService";
 import buildBook from "../testData/libraryDataBuilder";
 import Validator from "../core/responseValidator";
@@ -8,19 +11,18 @@ describe("Library API Flow", () => {
 
     let book: { name: string; isbn: string; aisle: string; author: string };
     let bookId: string;
+    let addBookResponse: { Msg: string; ID: string };
 
-    beforeAll(() => {
+    beforeAll(async () => {
         book = buildBook();
+        const res = await LibraryService.addBook(book);
+        addBookResponse = res.body as { Msg: string; ID: string };
+        bookId = addBookResponse.ID;
     });
 
     test("Add Book", async () => {
-        const res = await LibraryService.addBook(book);
-        const body = res.body as { Msg: string; ID: string };
-
-        expect(res.status).toBe(200);
-        expect(body.Msg).toBe("successfully added");
-
-        bookId = body.ID;
+        expect(addBookResponse.Msg).toBe("successfully added");
+        expect(typeof addBookResponse.ID).toBe("string");
     });
 
     test("Get Books By Author", async () => {

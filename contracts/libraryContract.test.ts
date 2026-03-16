@@ -1,3 +1,6 @@
+// Consumer-driven contract tests for Library API.
+// Inputs: request definitions + expected responses
+// Outputs: Pact files in reports/pacts when PACT_ENABLED=true.
 import path from "path";
 import axios from "axios";
 import { PactV3 } from "@pact-foundation/pact";

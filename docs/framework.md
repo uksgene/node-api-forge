@@ -193,7 +193,7 @@ services/placeService.js
 
 3. Data separation
 
-testData/placeData.json
+testData/placeDataBuilder.ts
 
 4. Environment management
 

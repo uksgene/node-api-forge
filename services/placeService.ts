@@ -1,4 +1,7 @@
 
+// Place API service wrapper used by tests.
+// Inputs: domain values (placeId, address, request body)
+// Outputs: ApiClient responses consumed by test assertions/validators.
 // Tests should only call services, never raw endpoints.
 
 import ApiClient from "../core/apiClient";

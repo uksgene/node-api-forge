@@ -1,0 +1,15 @@
+// Provide any fields you want to override. Unspecified fields fall back to defaults.
+// Example:
+// {
+//   "name": "My Custom Place",
+//   "address": "123 Custom Street",
+//   "location": { "lat": 12.34, "lng": 56.78 }
+// }
+{
+    "name": "forbidden palace",
+    "address": "666 forbidden Street",
+    "location": {
+        "lat": 12.34564,
+        "lng": 56.75478
+    }
+}

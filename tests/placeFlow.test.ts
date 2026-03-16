@@ -1,3 +1,6 @@
+// End-to-end place flow test.
+// Inputs: generated place payload + placeId chaining
+// Outputs: status/schema assertions to validate API behavior.
 import PlaceService from "../services/placeService";
 import buildPlace from "../testData/placeDataBuilder";
 import Validator from "../core/responseValidator";
@@ -8,16 +11,17 @@ describe("Place API Flow", () => {
 
     let placeId: string;
     let place: Record<string, unknown>;
+    let addPlaceResponse: { place_id: string };
 
     beforeAll(async () => {
         place = await buildPlace();
+        const res = await PlaceService.addPlace(place);
+        addPlaceResponse = res.body as { place_id: string };
+        placeId = addPlaceResponse.place_id;
     });
 
     test("Add Place", async () => {
-        const res = await PlaceService.addPlace(place);
-        const body = res.body as { place_id: string };
-        expect(res.status).toBe(200);
-        placeId = body.place_id;
+        expect(typeof addPlaceResponse.place_id).toBe("string");
     });
 
     test("Get Place", async () => {

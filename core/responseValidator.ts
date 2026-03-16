@@ -1,3 +1,6 @@
+// Schema validator for API responses.
+// Inputs: JSON schema + response body
+// Outputs: throws on mismatch; used in tests to enforce contracts.
 import Ajv, { JSONSchemaType } from "ajv";
 
 class Validator {

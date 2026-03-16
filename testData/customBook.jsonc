@@ -1,0 +1,14 @@
+// Provide any fields you want to override. Unspecified fields fall back to defaults.
+// Example:
+// {
+//   "name": "My Custom Book",
+//   "isbn": "bk99",
+//   "aisle": "123",
+//   "author": "Jane Doe"
+// }
+{
+    "name": "Firestarter",
+    "isbn": "bk324",
+    "aisle": "6786",
+    "author": "Stephen King"
+}

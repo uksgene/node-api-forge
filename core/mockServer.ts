@@ -1,3 +1,6 @@
+// In-memory mock for Place + Library APIs, used only in test mode.
+// Inputs: method + endpoint + body (from ApiClient)
+// Outputs: { status, body } shaped like the real API responses for tests.
 import { randomUUID } from "crypto";
 import { URL } from "url";
 

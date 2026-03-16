@@ -1,3 +1,6 @@
+// Simple retry wrapper for flaky calls.
+// Inputs: async function + retry count
+// Outputs: resolved value from fn or throws after retries are exhausted.
 async function retry<T>(fn: () => Promise<T>, retries = 3): Promise<T> {
     try {
         return await fn();

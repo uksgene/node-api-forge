@@ -1,4 +1,6 @@
 // Library API service wrapper for test flows.
+// Inputs: book payloads or identifiers
+// Outputs: ApiClient responses consumed by test assertions/validators.
 import ApiClient from "../core/apiClient";
 
 class LibraryService {
